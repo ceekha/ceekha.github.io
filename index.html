@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Validation</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+      input {
+        display: block;
+      }
+    </style>
+    <script>
+      function productCheckout(form) {
+        if(form["productId"].value == "" || form["quantity"].value == "" || form["price"].value == "" || form["totalValue"].value == "" || form["date"].value == "" || form["mobileNum"].value == "" || form["email"].value == "")
+        {
+          alert("Fill all the fields");
+          return false;
+        }
+        if (!/^[A-Za-z]{3}-\d{6}$/.test(form["productId"].value)) {
+          alert("Invalid product id.");
+          return false;
+        }
+        const length = form["productName"].value.length;
+        if (length <= 0 || length > 50) {
+          alert("Invalid product name. Name must be of at most 50 length.");
+          return false;
+        }
+        const quantity = parseInt(form["quantity"].value);
+        if (!quantity || quantity > 10) {
+          alert("Maximum quantity is 10.");
+          return false;
+        }
+        const price = parseInt(form["price"].value);
+        if (!price || price < 100 || price > 9999) {
+          alert("Price must be in range of 100 to 9999.");
+          return false;
+        }
+        const totalValue = parseInt(form["totalValue"].value);
+        if (!totalValue || totalValue != quantity * price) {
+          alert("Invalid total value. It must be quantity times price.");
+          return false;
+        }
+        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(form["date"].value)) {
+          alert("Invalid date. Write in pattern DD/MM/YYYY.");
+          return false;
+        }
+        if (!/^\d{10}$/.test(form["mobileNum"].value)) {
+          alert("Invalid Mobile Number. It must be a 10 digit number.");
+          return false;
+        }
+        if (!/\w+@\w+\.\w+/.test(form["email"].value)) {
+          alert("Invalid email address.");
+          return false;
+        }
+        
+        sessionStorage.setItem('productId', form["productId"].value);
+        sessionStorage.setItem('productName',form['productName'].value);
+        sessionStorage.setItem('quantity', form["quantity"].value);
+        sessionStorage.setItem('price',form['price'].value);
+        sessionStorage.setItem('totalValue', form["totalValue"].value);
+        sessionStorage.setItem('date', form["date"].value);
+        sessionStorage.setItem('mobileNum', form["mobileNum"].value);
+        sessionStorage.setItem('email', form["email"].value);
+        window.open("index-2.html");
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+
+    <div class="header">
+      <h1>Billing Corner</h1>
+    </div>
+    
+    
+    <div class="row">
+      <div class="main">
+        <div class="container">
+          <form onsubmit="event.preventDefault();productCheckout(this)">
+            <label
+              >Product ID:
+              <input type="text" name="productId" />
+            </label>
+            <label
+              >Product Name:
+              <input type="text" name="productName" />
+            </label>
+            <label>Quantity:
+              <select type="" name="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </label>
+            <br />
+            <label>Price: <input type="number" name="price" /></label>
+            <label>Total Value: <input type="number" name="totalValue" /></label>
+            <label
+              >Date of Purchase:
+              <input type="text" placeholder="DD/MM/YYYY" name="date"
+            /></label>
+            <label>Mobile Number: <input type="text" name="mobileNum" /></label>
+            <label>Email: <input type="text" name="email" /></label>
+            <input type="submit"></button>
+            <br>
+                  </div> 
+      </div>
+    </div>
+    
+    <div class="footer">
+      <h2>2020</h2>
+    </div>
+    
+    <script src="length.js">
+    </script>
+    </body>
+</html>
